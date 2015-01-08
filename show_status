@@ -19,20 +19,20 @@ gitted  = False
 mini    = True
 
 class bcolors:
-	HEADER = '\033[95m'
-	OKBLUE = '\033[94m'
-	OKGREEN = '\033[92m'
-	WARNING = '\033[93m'
-	FAIL = '\033[91m'
-	ENDC = '\033[0m'
+        HEADER = '\033[95m'
+        OKBLUE = '\033[94m'
+        OKGREEN = '\033[92m'
+        WARNING = '\033[93m'
+        FAIL = '\033[91m'
+        ENDC = '\033[0m'
 
-	def disable(self):
-		self.HEADER = ''
-		self.OKBLUE = ''
-		self.OKGREEN = ''
-		self.WARNING = ''
-		self.FAIL = ''
-		self.ENDC = ''
+        def disable(self):
+                self.HEADER = ''
+                self.OKBLUE = ''
+                self.OKGREEN = ''
+                self.WARNING = ''
+                self.FAIL = ''
+                self.ENDC = ''
 
 parser = OptionParser(description="\
 Show Status is awesome. If you tell it a directory to look in, it'll scan \
@@ -119,12 +119,12 @@ if __name__ == "__main__":
                 branch = out[j+10:k];
                 branchColor = bcolors.WARNING;
 
-		if branch == 'master':
-			branchColor = bcolors.OKGREEN
+                if branch == 'master':
+                        branchColor = bcolors.OKGREEN
 
-		branch = "[ " + branchColor + branch.ljust(15) + bcolors.ENDC + " ]"
+                branch = "[ " + branchColor + branch.ljust(15) + bcolors.ENDC + " ]"
 
-		if -1 != out.find('nothing'):
+                if -1 != out.find('nothing'):
                     result = bcolors.OKGREEN + "No Changes" + bcolors.ENDC
 
                     # Pull from the remote
