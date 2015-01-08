@@ -62,11 +62,11 @@ parser.add_option("-r", "--remote",
                 help        = "Set the remote name (remotename:branchname)"
                 )
 
-parser.add_option("--push",
+parser.add_option("--sync",
                 action      = "store_true",
-                dest        = "push",
+                dest        = "sync",
                 default     = False,
-                help        = "Do a 'git push' if you've set a remote with -r it will push to there"
+                help        = "Do a 'git pull' and 'git push' if you've set a remote with -r it will push to there"
                 )
 
 parser.add_option("-p", "--pull",
@@ -135,19 +135,23 @@ if __name__ == "__main__":
                         'cd '+ infile +
                         '; git stash' +
                         '; git pull --rebase '+
-                        '; git stash pop' +
-                        ' '.join(options.remote.split(":"))
+                        ' '.join(options.remote.split(":")) +
+                        '; git stash pop'
                     )
                     result = result + " (Pulled) \n" + push
 
                 # Push to the remote
-                if False != options.push:
-                    push = commands.getoutput(
+                if False != options.sync:
+                    sync = commands.getoutput(
                         'cd '+ infile +
+                        '; git stash' +
+                        '; git pull --rebase' +
+                        ' '.join(options.remote.split(":")) +
                         '; git push '+
-                        ' '.join(options.remote.split(":"))
+                        ' '.join(options.remote.split(":")) +
+                        '; git stash pop'
                     )
-                    result = result + " (Pushed) \n" + push
+                    result = result + " (Synced) \n" + sync
 
 
                 # Write to screen
