@@ -126,29 +126,29 @@ if __name__ == "__main__":
 
                 if -1 != out.find('nothing'):
                     result = bcolors.OKGREEN + "No Changes" + bcolors.ENDC
+                else:
+                    result = bcolors.FAIL + "Changes" + bcolors.ENDC
 
-                    # Pull from the remote
-                    if False != options.pull:
-                        push = commands.getoutput(
-                            'cd '+ infile +
-                            '; git stash' +
-                            '; git pull --rebase '+
-                            '; git stash pop' +
-                            ' '.join(options.remote.split(":"))
-                        )
-                        result = result + " (Pulled) \n" + push
+                # Pull from the remote
+                if False != options.pull:
+                    push = commands.getoutput(
+                        'cd '+ infile +
+                        '; git stash' +
+                        '; git pull --rebase '+
+                        '; git stash pop' +
+                        ' '.join(options.remote.split(":"))
+                    )
+                    result = result + " (Pulled) \n" + push
 
-                    # Push to the remote
-                    if False != options.push:
-                        push = commands.getoutput(
-                            'cd '+ infile +
-                            '; git push '+
-                            ' '.join(options.remote.split(":"))
-                        )
-                        result = result + " (Pushed) \n" + push
+                # Push to the remote
+                if False != options.push:
+                    push = commands.getoutput(
+                        'cd '+ infile +
+                        '; git push '+
+                        ' '.join(options.remote.split(":"))
+                    )
+                    result = result + " (Pushed) \n" + push
 
-		else:
-		    result = bcolors.FAIL + "Changes" + bcolors.ENDC
 
                 # Write to screen
                 sys.stdout.write("--" + bcolors.OKBLUE + infile.ljust(55) + bcolors.ENDC + branch + " : " + result +"\n")
