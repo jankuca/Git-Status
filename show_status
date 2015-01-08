@@ -131,26 +131,44 @@ if __name__ == "__main__":
 
                 # Pull from the remote
                 if False != options.pull:
-                    push = commands.getoutput(
+                    push = ''
+                    if -1 == out.find('nothing'): # has changes
+                        push = push + commands.getoutput(
+                            'cd '+ infile +
+                            '; git stash'
+                        )
+                    push = push + commands.getoutput(
                         'cd '+ infile +
-                        '; git stash' +
-                        '; git pull --rebase '+
-                        ' '.join(options.remote.split(":")) +
-                        '; git stash pop'
+                        '; git pull --rebase' +
+                        ' '.join(options.remote.split(":"))
                     )
+                    if -1 == out.find('nothing'): # has changes
+                        push = push + commands.getoutput(
+                            'cd '+ infile +
+                            '; git stash pop'
+                        )
                     result = result + " (Pulled) \n" + push
 
                 # Push to the remote
                 if False != options.sync:
-                    sync = commands.getoutput(
+                    sync = ''
+                    if -1 == out.find('nothing'): # has changes
+                        sync = sync + commands.getoutput(
+                            'cd '+ infile +
+                            '; git stash'
+                        )
+                    sync = sync + commands.getoutput(
                         'cd '+ infile +
-                        '; git stash' +
                         '; git pull --rebase' +
                         ' '.join(options.remote.split(":")) +
                         '; git push '+
-                        ' '.join(options.remote.split(":")) +
-                        '; git stash pop'
+                        ' '.join(options.remote.split(":"))
                     )
+                    if -1 == out.find('nothing'): # has changes
+                        sync = sync + commands.getoutput(
+                            'cd '+ infile +
+                            '; git stash pop'
+                        )
                     result = result + " (Synced) \n" + sync
 
 
