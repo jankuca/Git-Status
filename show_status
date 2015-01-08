@@ -131,7 +131,9 @@ if __name__ == "__main__":
                     if False != options.pull:
                         push = commands.getoutput(
                             'cd '+ infile +
-                            '; git pull '+
+                            '; git stash' +
+                            '; git pull --rebase '+
+                            '; git stash pop' +
                             ' '.join(options.remote.split(":"))
                         )
                         result = result + " (Pulled) \n" + push
